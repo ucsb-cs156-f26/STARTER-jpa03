@@ -23,4 +23,4 @@ repo_name: "TBD"
 repo: ucsb-cs156-f26/STARTER-jpa03
 owner: ucsb-cs156-f26
 repo_name: STARTER-jpa03
-pull_requests: [{"author":{"id":"MDQ6VXNlcjExMTkwMTc=","is_bot":false,"login":"pconrad","name":"Phill Conrad"},"headRefName":"java25-migration","number":2,"title":"Update to Java 25.0.4, Spring Boot 3.5.16 and Maven 3.9.16 for F26","url":"https://github.com/ucsb-cs156-f26/STARTER-jpa03/pull/2"}]
+pull_requests: []
