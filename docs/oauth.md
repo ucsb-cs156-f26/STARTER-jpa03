@@ -117,10 +117,10 @@ Before you try to configure a dokku app for OAuth, do these steps *in this order
    It just means that your app hasn't been started yet.
    Just continue with the instructions.
 
-7. Build the app with regular `http` using the commands.  This will deploy an http only version of the app. When these commands complete, *you will still not be able to login yet, but you should be able to access the home page over `http`*:<br />
-   <tt>dokku git:sync jpa03-<i>yourGithubLogin</i> https://github.com/ucsb-cs156-s26/jpa03-<i>yourGithubLogin</i> main</tt><br />
+6. Build the app with regular `http` using the commands.  This will deploy an http only version of the app. When these commands complete, *you will still not be able to login yet, but you should be able to access the home page over `http`*:<br />
+   <tt>dokku git:sync jpa03-<i>yourGithubLogin</i> https://github.com/ucsb-cs156-f26/jpa03-<i>yourGithubLogin</i> main</tt><br />
    <tt>dokku ps:rebuild jpa03-<i>yourGithubLogin</i></tt><br />
-8. Now deploy https (encrypting) with these commands.
+7. Now deploy https (encrypting) with these commands.
    This will deploy an https  version of the app.
    When these commands complete, *you should be able to login with OAuth*:<br />
    <tt>dokku letsencrypt:set jpa03-<i>yourGithubLogin</i> email <i>yourEmail</i>@ucsb.edu</tt><br />

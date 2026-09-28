@@ -9,15 +9,44 @@ Running at: <https://jpa03-cgaucho.dokku-13.cs.ucsb.edu>
 Then remove this TODO item.
 ```
 
-Running at: <https://starter-jpa03.dokku-00.cs.ucsb.edu>
+Running at: <https://jpa03-staff.dokku-00.cs.ucsb.edu>
 
 # Configuring GitHub Pages for the documentation
 
 This repo contains Github Actions scripts that automatically create and publish documentation for the code:
 * javadoc for the backend Java code
-* Storybook for the frontend React code
+* jacoco (test coverage) and pitest (mutation testing) reports for the backend Java code
 
 To set this up, follow the instructions here: [`docs/github-pages.md`](docs/github-pages.md)
+
+# Java 25 setup with SDKMAN
+
+This project follows the course instructions for Java 25.0.4, using the
+recommended `25.0.4-tem` distribution via SDKMAN, with Maven 3.9.16
+(also provided by the included Maven Wrapper, `./mvnw`).
+See the [course software installation instructions](https://ucsb-cs156.github.io/f26/info/software.html)
+for details on installing SDKMAN, Java and Maven.
+
+If you use SDKMAN, the setup is:
+
+```bash
+sdk install java 25.0.4-tem
+sdk install maven 3.9.16
+sdk env install
+java -version
+mvn --version
+```
+
+The project includes a `.java-version` file and an `.sdkmanrc` file so that
+the correct Java version is selected automatically when SDKMAN is present
+(run `sdk env` in this directory to select it).  Every `mvn` command below
+can also be run as `./mvnw`, which downloads and uses the pinned Maven
+version without a separate Maven install.
+
+Both `java -version` and `mvn --version` should report Java 25.0.4 before you
+run any of the commands below; with an older Java you may see confusing build
+errors (for example, JaCoCo or Pitest complaining about an
+`Unsupported class file major version`).
 
 # Getting Started on localhost
 

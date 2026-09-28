@@ -17,12 +17,12 @@ jobs:
     timeout-minutes: 10
     
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up Java (version from .java-version file)
-      uses: actions/setup-java@v4
+    - uses: actions/checkout@v5
+    - name: Set up Java (version from .sdkmanrc file)
+      uses: actions/setup-java@v5
       with:
-         distribution: semeru # See: https://github.com/actions/setup-java#supported-distributions
-         java-version-file: ./.java-version
+         distribution: temurin # matches the -tem suffix in .sdkmanrc; see https://github.com/actions/setup-java#supported-distributions
+         java-version-file: ./.sdkmanrc
   
     - name: Build with Maven
       env:

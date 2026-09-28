@@ -17,12 +17,12 @@ jobs:
     timeout-minutes: 10
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up Java (version from .java-version file)
-      uses: actions/setup-java@v4
+    - uses: actions/checkout@v5
+    - name: Set up Java (version from .sdkmanrc file)
+      uses: actions/setup-java@v5
       with:
-         distribution: semeru # See: https://github.com/actions/setup-java#supported-distributions
-         java-version-file: ./.java-version
+         distribution: temurin # matches the -tem suffix in .sdkmanrc; see https://github.com/actions/setup-java#supported-distributions
+         java-version-file: ./.sdkmanrc
     - name: Figure out branch name
       id: get-branch-name
       run: | 
@@ -57,13 +57,13 @@ jobs:
       run: mvn pitest:mutationCoverage -DmutationThreshold=100 
     - name: Upload Pitest History to Artifacts
       if: always() # always upload artifacts, even if tests fail
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
         name: pitest-${{env.branch_name}}-history.bin
         path: target/pit-history/history.bin
     - name: Upload Pitest Report to Artifacts
       if: always() # always upload artifacts, even if tests fail
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
         name: pitest
         path: target/pit-reports/* 

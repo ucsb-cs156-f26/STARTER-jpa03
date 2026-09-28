@@ -20,7 +20,7 @@ jobs:
 
     steps:
     - name: Checkout local code to establish repo
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
     - name: Get Pull Requests from Github api
       id: get-prs
       run: |
@@ -39,18 +39,18 @@ jobs:
       destination: target/reports/apidocs
     steps:
     - name: Checkout local code to establish repo
-      uses: actions/checkout@v4
-    - name: Set up Java (version from .java-version file)
-      uses: actions/setup-java@v4
+      uses: actions/checkout@v5
+    - name: Set up Java (version from .sdkmanrc file)
+      uses: actions/setup-java@v5
       with:
-         distribution: semeru # See: https://github.com/actions/setup-java#supported-distributions
-         java-version-file: ./.java-version
+         distribution: temurin # matches the -tem suffix in .sdkmanrc; see https://github.com/actions/setup-java#supported-distributions
+         java-version-file: ./.sdkmanrc
   
     - name: Build javadoc
       run: mvn -DskipTests javadoc:javadoc
 
     - name: Upload to artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
           name: javadoc
           path: ${{ env.destination }}
@@ -64,12 +64,12 @@ jobs:
       destination: target/site/jacoco  
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up Java (version from .java-version file)
-      uses: actions/setup-java@v4
+    - uses: actions/checkout@v5
+    - name: Set up Java (version from .sdkmanrc file)
+      uses: actions/setup-java@v5
       with:
-         distribution: semeru # See: https://github.com/actions/setup-java#supported-distributions
-         java-version-file: ./.java-version
+         distribution: temurin # matches the -tem suffix in .sdkmanrc; see https://github.com/actions/setup-java#supported-distributions
+         java-version-file: ./.sdkmanrc
   
     - name: Build with Maven
       continue-on-error: true
@@ -78,7 +78,7 @@ jobs:
       run: mvn -B test jacoco:report verify
 
     - name: Upload to artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
           name: jacoco
           path: ${{ env.destination }}
@@ -93,12 +93,12 @@ jobs:
       history_destination: target/pit-history
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up Java (version from .java-version file)
-      uses: actions/setup-java@v4
+    - uses: actions/checkout@v5
+    - name: Set up Java (version from .sdkmanrc file)
+      uses: actions/setup-java@v5
       with:
-         distribution: semeru # See: https://github.com/actions/setup-java#supported-distributions
-         java-version-file: ./.java-version
+         distribution: temurin # matches the -tem suffix in .sdkmanrc; see https://github.com/actions/setup-java#supported-distributions
+         java-version-file: ./.sdkmanrc
     - name: create directories
       run: |
          mkdir -p ${{ env.destination }}
@@ -132,13 +132,13 @@ jobs:
 
     - name: Upload Pitest History to Artifacts
       if: always() # always upload artifacts, even if tests fail
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
         name: pitest-main-history.bin
         path: ${{ env.history_destination}}/history.bin
 
     - name: Upload to artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
           name: pitest
           path: ${{ env.destination }}
@@ -158,24 +158,24 @@ jobs:
 
     steps:
     - name: Checkout repo
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         ref: ${{ matrix.value.headRefName }}
         fetch-depth: 1
         token: ${{ github.token }}
 
-    - name: Set up Java (version from .java-version file)
-      uses: actions/setup-java@v4
+    - name: Set up Java (version from .sdkmanrc file)
+      uses: actions/setup-java@v5
       with:
-         distribution: semeru # See: https://github.com/actions/setup-java#supported-distributions
-         java-version-file: ./.java-version
+         distribution: temurin # matches the -tem suffix in .sdkmanrc; see https://github.com/actions/setup-java#supported-distributions
+         java-version-file: ./.sdkmanrc
 
     - name: Build javadoc
       run: mvn -DskipTests javadoc:javadoc
  
     - name: Upload javadoc to Artifacts
       if: always() # always upload artifacts, even if tests fail
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
         name: prs-${{ matrix.value.number }}-javadoc
         path: ${{ env.destination }}
@@ -193,17 +193,17 @@ jobs:
 
     steps:
     - name: Checkout repo
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         ref: ${{ matrix.value.headRefName }}
         fetch-depth: 1
         token: ${{ github.token }}
 
-    - name: Set up Java (version from .java-version file)
-      uses: actions/setup-java@v4
+    - name: Set up Java (version from .sdkmanrc file)
+      uses: actions/setup-java@v5
       with:
-         distribution: semeru # See: https://github.com/actions/setup-java#supported-distributions
-         java-version-file: ./.java-version
+         distribution: temurin # matches the -tem suffix in .sdkmanrc; see https://github.com/actions/setup-java#supported-distributions
+         java-version-file: ./.sdkmanrc
 
     - name: Build with Maven
       continue-on-error: true
@@ -212,7 +212,7 @@ jobs:
       run: mvn -B test jacoco:report verify
  
     - name: Upload to artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
           name: prs-${{ matrix.value.number }}-jacoco
           path: target/site/jacoco
@@ -234,7 +234,7 @@ jobs:
 
     steps:
     - name: Checkout repo
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         ref: ${{ matrix.value.headRefName }}
         fetch-depth: 1
@@ -250,11 +250,11 @@ jobs:
           BRANCH=$(echo "${{ matrix.value.headRefName }}" | sed 's/refs\/heads\///g')
           echo "branch_name=${BRANCH}"
           echo "branch_name=${BRANCH}" >> "$GITHUB_ENV"
-    - name: Set up Java (version from .java-version file)
-      uses: actions/setup-java@v4
+    - name: Set up Java (version from .sdkmanrc file)
+      uses: actions/setup-java@v5
       with:
-         distribution: semeru # See: https://github.com/actions/setup-java#supported-distributions
-         java-version-file: ./.java-version
+         distribution: temurin # matches the -tem suffix in .sdkmanrc; see https://github.com/actions/setup-java#supported-distributions
+         java-version-file: ./.sdkmanrc
 
     - name: Download artifact
       id: download-artifact
@@ -284,13 +284,13 @@ jobs:
 
     - name: Upload Pitest History to Artifacts
       if: always() # always upload artifacts, even if tests fail
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
         name: pitest-${{ matrix.value.number }}-history.bin
         path: ${{ env.history_destination}}/history.bin
 
     - name: Upload to artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
           name: prs-${{ matrix.value.number }}-pitest
           path: ${{ env.destination }}
